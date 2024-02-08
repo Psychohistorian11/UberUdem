@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" type="text/css" href="styles.css">
+    <title>Mapa con Entradas</title>
+</head>
+<body>
+    <div class="container">
+
+        <div class="left-section">
+            <label for="salida">Salida:</label>
+            <input type="text" id="salida" placeholder="Ingrese la dirección de salida">
+
+            <label for="destino">Destino:</label>
+            <input type="text" id="destino" placeholder="Ingrese la dirección de destino">
+
+            <button onclick="buscarRuta()">Buscar Ruta</button>
+        </div>
+
+        <div class="right-section">
+            <div id="map"></div>
+            <script src="app.js"></script>
+            <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA-dg5_nxz03QMOcCgRuXuQdCd3iAkNmDU&callback=initMap"></script>
+        </div>
+    </div>
+</body>
+</html>
+
+
