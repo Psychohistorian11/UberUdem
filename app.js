@@ -5,9 +5,6 @@ let directionsService;
 let directionDisplay;
 let routeGenerated = false;
 
-let originList = [];
-let destinyList = [];
-
 function initMap() {
 
 
@@ -34,21 +31,7 @@ function initMap() {
         draggable: true,
     });
    
-        google.maps.event.addListener(marker, 'dragend', function (event) {
-            console.log(marker);
-            const lat = marker.getPosition().lat();
-            const lng = marker.getPosition().lng();
-            console.log("Nuevas coordenadas:", lat, lng);
-            calculateRoute();
-            })
-    
 
- 
-        google.maps.event.addListener(markerDestiny, 'dragend', function (event) {
-            const lat = markerDestiny.getPosition().lat();
-            const lng = markerDestiny.getPosition().lng();
-            console.log("Nuevas coordenadas Destino:", lat, lng);
-            });
 
 
     google.maps.event.addListenerOnce(map, 'idle', () => {
@@ -56,36 +39,23 @@ function initMap() {
         
     });
 
-    // Recuperar desde localStorage al inicializar el mapa
-    const storedOriginList = localStorage.getItem('originList');
-    const storedDestinyList = localStorage.getItem('destinyList');
-
-    if (storedOriginList && storedDestinyList) {
-        originList = JSON.parse(storedOriginList);
-        destinyList = JSON.parse(storedDestinyList);
+    const salida = localStorage.getItem('salida');
+    const destino = localStorage.getItem('destino');
+    if (salida != "" && destino != ""){
+        buscarRuta(salida,destino)
+        buscarConductor()
     }
 
-    if (originList.length > 0 && destinyList.length > 0) {
-            buscarRuta(originList[0],destinyList[0])
-    }
 }
 
-function buscarRuta(salidaNew=null,destinoNew=null) {
+function buscarRuta(salidaNew="",destinoNew="") {
     let salida = document.getElementById("salida").value;
     let destino = document.getElementById("destino").value;
 
-    if (salida == ""){
+    if(salidaNew != "" && destinoNew != ""){
         salida = salidaNew
-    } 
-    if (destino == ""){
         destino = destinoNew
     }
-
-    originList.push(salida);
-    destinyList.push(destino);
-
-    localStorage.setItem('originList', JSON.stringify(originList));
-    localStorage.setItem('destinyList', JSON.stringify(destinyList));
 
     // API de Geocodificación para obtener las coordenadas
     const geocoder = new google.maps.Geocoder();
@@ -100,12 +70,15 @@ function buscarRuta(salidaNew=null,destinoNew=null) {
             const geocoderDestiny = new google.maps.Geocoder();
             geocoderDestiny.geocode({ address: destino }, function (results, status) {
                 if (status === google.maps.GeocoderStatus.OK) {
+
                     const latDestiny = results[0].geometry.location.lat();
                     const lngDestiny = results[0].geometry.location.lng();
+                    
                     markerDestiny.setPosition({ lat: latDestiny, lng: lngDestiny });
 
 
                     calculateRoute(); // Llamada a calculateRoute después de obtener las coordenadas de destino
+                    enviarInformacion(salida,destino)
                 } else {
                     console.error("Error al obtener las coordenadas:", status);
                     Swal.fire({
@@ -130,8 +103,14 @@ function buscarRuta(salidaNew=null,destinoNew=null) {
 
 function calculateRoute() {
     directionsService.route({
-        origin: originList[0], 
-        destination: destinyList[0],
+        origin: {
+            lat: marker.getPosition().lat(),
+            lng: marker.getPosition().lng(),
+        },
+        destination: {
+            lat: markerDestiny.getPosition().lat(),
+            lng: markerDestiny.getPosition().lng(),
+        },
         travelMode: google.maps.TravelMode.DRIVING,
     }, (response, status) => {
         if (status === google.maps.DirectionsStatus.OK) {
@@ -163,36 +142,49 @@ function buscarConductor() {
     Swal.fire({
         title: "Buscando conductor",
         icon: "info",
-        showCancelButton: true,
+      
         showCloseButton: true,
         showConfirmButton: false,
-        html: "<button class='swal2-cancel swal2-styled' onclick='cancelarPedido()'>Cancelar Pedido</button>", 
-        html: "<button class='swal2-cancel swal2-styled' onclick='menuClicked()'> ir al Menu</button>",    
+        html: "<button class='swal2-cancel swal2-styled' onclick='cancelarPedido()'>Cancelar Pedido</button>" +
+              "<button class='swal2-cancel swal2-styled' onclick='menuClicked()'>Ir al Menú</button>",    
     });
-
-    // Limpiar el localStorage
-
-
-    // Puedes agregar aquí el código para buscar un conductor
 }
 
+
 function cancelarPedido() {
-    // Limpiar las listas
-    originList = [];
-    destinyList = [];
+    // Limpiar las marcas y la ruta
+    marker.setPosition(null);
+    markerDestiny.setPosition(null);
+    directionDisplay.setDirections({ routes: [] });
+    routeGenerated = false;
 
-    // Limpiar el localStorage también, si es necesario
-    localStorage.removeItem('originList');
-    localStorage.removeItem('destinyList');
+    // Mostrar el mapa predeterminado
+    map.setCenter({ lat: 6.2442, lng: -75.5812 });
+    map.setZoom(12);
 
-    // Puedes agregar aquí más lógica si es necesario antes de redirigir al menú
-    menuClicked();
+    // Ocultar el contenedor del botón
+    const contenedorBoton = document.getElementById("botonContainer");
+    contenedorBoton.innerHTML = '';
+
+    // Limpiar el localStorage
+    localStorage.removeItem('salida');
+    localStorage.removeItem('destino');
+
+    // Cerrar el cuadro de diálogo de SweetAlert
+    Swal.close();
+
 }
 
 function menuClicked() {
     // Puedes agregar aquí el código que se ejecutará cuando se haga clic en el botón "Menu"
     // Por ejemplo, puedes abrir un menú o realizar otra acción relacionada con el menú.
     window.location.href = "index.html";
+}
+
+function enviarInformacion(salida, destino){
+    localStorage.setItem('salida', salida);
+    localStorage.setItem('destino', destino);
+
 }
 
 
