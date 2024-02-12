@@ -4,6 +4,8 @@ let markerDestiny;
 let directionsService;
 let directionDisplay;
 let routeGenerated = false;
+let distanceValue;
+let distanceText;
 
 function initMap() {
 
@@ -18,6 +20,7 @@ function initMap() {
     directionsService = new google.maps.DirectionsService();
     directionDisplay = new google.maps.DirectionsRenderer();
 
+        
     directionDisplay.setMap(map);
 
     // Inicializar el marcador
@@ -32,8 +35,6 @@ function initMap() {
         draggable: true,
     });
    
-
-
 
     google.maps.event.addListenerOnce(map, 'idle', () => {
         document.getElementById("map").classList.add('show-map');
@@ -117,6 +118,10 @@ function calculateRoute() {
         if (status === google.maps.DirectionsStatus.OK) {
             directionDisplay.setDirections(response);
             routeGenerated = true;
+            distanceValue = response.routes[0].legs[0].distance.value;
+            distanceText = response.routes[0].legs[0].distance.text;
+            console.log(`Driving distance: ${distanceText}`);
+            console.log(`Driving value: ${distanceValue}`);
             mostrarBoton();
         } else {
             alert('No se pudieron mostrar las direcciones debido a: ' + status);
@@ -192,5 +197,4 @@ function enviarInformacion(salida, destino){
     localStorage.setItem('destino', destino);
 
 }
-
 
