@@ -122,6 +122,7 @@ function calculateRoute() {
             distanceText = response.routes[0].legs[0].distance.text;
             console.log(`Driving distance: ${distanceText}`);
             console.log(`Driving value: ${distanceValue}`);
+            precio = calcularPrecio();
             mostrarBoton();
         } else {
             alert('No se pudieron mostrar las direcciones debido a: ' + status);
@@ -198,3 +199,11 @@ function enviarInformacion(salida, destino){
 
 }
 
+function calcularPrecio() {
+    valor_km = 4000;
+    distancia_km = distanceValue/1000;
+    console.log(distancia_km)
+    precio = (distancia_km*valor_km);
+    console.log(precio)
+    return precio
+}
