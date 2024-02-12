@@ -69,3 +69,8 @@ body {
     border: 2px solid #ddd; /* Añade un borde al mapa */
     border-radius: 10px; /* Agrega esquinas redondeadas al mapa */
 }
+
+.custom-content-class {
+    height: 150px; /* Ajusta la altura según tus necesidades */
+}
+
