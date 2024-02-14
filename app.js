@@ -96,7 +96,6 @@ function buscarRuta(salidaNew="",destinoNew="") {
                 title: "Ingresar Dirección",
                 icon: "warning",
                 
-                
             });
         }
     });
@@ -196,11 +195,10 @@ function menuClicked() {
 function enviarInformacion(salida, destino){
     localStorage.setItem('salida', salida);
     localStorage.setItem('destino', destino);
-
 }
 
 function calcularPrecio() {
-    valor_km = 4000;
+    valor_km = 1300;
     distancia_km = distanceValue/1000;
     console.log(distancia_km)
     precio = (distancia_km*valor_km);
