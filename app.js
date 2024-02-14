@@ -5,8 +5,7 @@ let directionsService;
 let directionDisplay;
 let directionDisplayDriver;
 let routeGenerated = false;
-let distanceValue;
-let distanceText;
+
 
 
 function initMap() {
@@ -90,10 +89,14 @@ function buscarRuta(salidaNew="",destinoNew="") {
                     const lngDestiny = results[0].geometry.location.lng();
                     
                     markerDestiny.setPosition({ lat: latDestiny, lng: lngDestiny });
+                    marker.setMap(null);
+                    markerDestiny.setMap(null);
 
 
                     calculateRoute(); // Llamada a calculateRoute después de obtener las coordenadas de destino
-                    enviarInformacion(salida, destino)
+                    distanceText = localStorage.getItem("kilometros");
+                    precio = localStorage.getItem("precio");
+                    enviarInformacion(salida, destino,distanceText,precio);
                 } else {
                     console.error("Error al obtener las coordenadas:", status);
                     Swal.fire({
@@ -133,21 +136,22 @@ function calculateRoute() {
             routeGenerated = true;
             distanceValue = response.routes[0].legs[0].distance.value;
             distanceText = response.routes[0].legs[0].distance.text;
-            mostrarBoton(distanceText);
+            localStorage.setItem("kilometros", distanceText);
+            precio = Math.round(calcularPrecio(distanceValue));
+            localStorage.setItem("precio", precio);
+            mostrarBoton(distanceText,precio);
         } else {
             alert('No se pudieron mostrar las direcciones debido a: ' + status);
         }
     });
 }
 
-function mostrarBoton(distanceText) {
+function mostrarBoton(distanceText,precio) {
     if (routeGenerated) {
         const contenedorBoton = document.getElementById("botonContainer");
 
         // Eliminar cualquier botón existente dentro del contenedor
-        contenedorBoton.innerHTML = '';
-
-        precio = Math.round(calcularPrecio())
+        contenedorBoton.innerHTML="";
 
         // Crear un div para el título "precio"
         const tituloPrecio = document.createElement("div");
@@ -202,7 +206,8 @@ function cancelarPedido() {
 
     // Ocultar el contenedor del botón
     const contenedorBoton = document.getElementById("botonContainer");
-    contenedorBoton.innerHTML = '';
+   
+    
 
     // Limpiar el localStorage
     localStorage.removeItem('salida');
@@ -213,32 +218,31 @@ function cancelarPedido() {
     localStorage.setItem("driverOnTheWay", driverOnTheWay)
     Swal.close();
 
+    window.location.href = "pasajero.html";
+
 }
 
 function menuClicked() {
-    // Puedes agregar aquí el código que se ejecutará cuando se haga clic en el botón "Menu"
-    // Por ejemplo, puedes abrir un menú o realizar otra acción relacionada con el menú.
     window.location.href = "index.html";
 }
 
-function enviarInformacion(salida, destino){
+function enviarInformacion(salida, destino,distanceText,precio){
 
     localStorage.setItem("kilometros", distanceText);
-    precio = Math.round(calcularPrecio());
     localStorage.setItem("precio", precio);
     localStorage.setItem('salida', salida);
     localStorage.setItem('destino', destino);
 
 }
 
-function calcularPrecio() {
+function calcularPrecio(distanceValue) {
     valor_km = 1300;
     distancia_km = distanceValue/1000;
     if (distancia_km < 4.1){
         return 5200
     } 
     precio = (distancia_km*valor_km);
-    return precio
+    return precio.toString()
 }
 
 function driverOnTheWay(){
@@ -264,6 +268,8 @@ function driverOnTheWay(){
 
     driverInWay = "0";
     localStorage.setItem("driverInWay", driverInWay)
+
+
 }
     
 
