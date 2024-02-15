@@ -10,7 +10,8 @@ body {
     height: 100vh;
 }
 
-.left-section {
+.left-sectionUsuario {
+    font-size: 25px;
     flex: 1;
     background-color: #59A5D8; 
     color: #fff;
@@ -22,25 +23,28 @@ body {
   
 }
 
-.left-section label {
-    font-size: 20px;
+.left-sectionUsuario label {
+    font-size: 27px;
     margin-bottom: 10px;
     color: #fff; 
+    align-items: flex-start;
 }
 
-.left-section input {
+.left-sectionUsuario input {
     padding: 10px 70px;
-    font-size: 16px;
+    font-size: 25px;
     margin-bottom: 15px;
-    background-color: #133C55; /* Cambiado a negro */
-    color: #fff;
+    background-color: #84d2f6; /* Cambiado a negro */
+    color: #000;
     border: 2px solid #59A5D8;
+    border-radius: 10px;
 }
 
-.left-section button {
+.left-sectionUsuario button {
+    width: 450px;
     padding: 15px 30px;
     margin-top: 10px;
-    font-size: 18px;
+    font-size: 25px;
     cursor: pointer;
     background-color: #133C55; 
     border: none;
@@ -49,18 +53,18 @@ body {
     transition: background-color 0.3s;
 }
 
-.left-section button:hover {
-    background-color: #84d2f6; /* Cambiado a verde más oscuro al pasar el cursor sobre el botón */
+.left-sectionUsuario button:hover {
+    background-color: #84d2f6;
 }
 
-.left-section input:focus {
+.left-sectionUsuario input:focus {
     outline: none;
     border: 2px solid #386fa4;
 }
 
-.right-section {
-    flex: 1;
-    background-color: #84d2f6; /* Cambiado a negro */
+.right-sectionUsuario {
+    flex: 3;
+    background-color: #84d2f6; 
     overflow: hidden;
     display: flex;
     align-items: center;
@@ -68,8 +72,8 @@ body {
 }
 
 #map {
-    height: 150vh;
+    height: 90vh;
     width: 80%;
-    border: 2px solid #fff; /* Cambiado a blanco para contrastar con el fondo negro */
+    border: 5px solid #133C55; 
     border-radius: 10px;
 }

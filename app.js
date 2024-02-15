@@ -150,29 +150,44 @@ function mostrarBoton(distanceText,precio) {
     if (routeGenerated) {
         const contenedorBoton = document.getElementById("botonContainer");
 
-        // Eliminar cualquier botón existente dentro del contenedor
         contenedorBoton.innerHTML="";
 
-        // Crear un div para el título "precio"
+        const tituloDistancia = document.createElement("div");
+        tituloDistancia.textContent = "Distancia (km)";
+        tituloDistancia.style.fontSize = "27px";
+        tituloDistancia.style.marginTop = "20px";
+        tituloDistancia.style.marginBottom = "10px";
+
+        const textoDistancia = document.createElement("div");
+        textoDistancia.textContent = distanceText;
+        textoDistancia.style.fontSize = "30px";
+        textoDistancia.style.padding = "10px"; 
+        textoDistancia.style.borderRadius = "10px";
+        textoDistancia.style.backgroundColor = "#84d2f6";
+
+
         const tituloPrecio = document.createElement("div");
-        tituloPrecio.textContent = "Precio";
-        tituloPrecio.style.fontWeight = "bold";
-        tituloPrecio.style.marginBottom = "5px";
-        tituloPrecio.style.fontSize = "20px"
+        tituloPrecio.textContent = "Valor del viaje (COP)";
+        tituloPrecio.style.fontSize = "27px";
+        tituloPrecio.style.marginBottom = "10px";
+        tituloPrecio.style.marginTop = "20px";
 
-        // Crear un div para mostrar el texto encima del botón
-        const textoDiv = document.createElement("div");
-        textoDiv.textContent = distanceText + ': $  ' + precio;
-        textoDiv.style.fontWeight = "bold";
-        textoDiv.style.fontSize = "20px";
+        const textoPrecio = document.createElement("div");
+        textoPrecio.textContent = "$" + precio ;
+        textoPrecio.style.fontSize = "30px";
+        textoPrecio.style.padding = "10px"; 
+        textoPrecio.style.borderRadius = "10px"; 
+        textoPrecio.style.backgroundColor = "#84d2f6"; 
 
-        // Crear el botón y añadirlo al contenedor
         const botonBuscarConductor = document.createElement("button");
+        botonBuscarConductor.style.marginTop = "20px";
         botonBuscarConductor.textContent = "Buscar Conductor";
         botonBuscarConductor.onclick = buscarConductor;
         
+        contenedorBoton.appendChild(tituloDistancia);
+        contenedorBoton.appendChild(textoDistancia);
         contenedorBoton.appendChild(tituloPrecio);
-        contenedorBoton.appendChild(textoDiv);
+        contenedorBoton.appendChild(textoPrecio);
         contenedorBoton.appendChild(botonBuscarConductor);
 
         contenedorBoton.style.textAlign = "center";

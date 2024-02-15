@@ -11,7 +11,7 @@ body {
 
 .left-section {
     flex: 1;
-    background-color: #59A5D8;
+    background-color: #fff;
     color: #fff;
     padding: 20px;
     display: flex;
@@ -24,12 +24,6 @@ body {
 .left-section label {
     font-size: 20px;
     margin-bottom: 10px;
-}
-
-.left-section input {
-    padding: 10px;
-    font-size: 40px;
-    margin-bottom: 30px;
 }
 
 /* Estilo para el botón Buscar Ruta */
@@ -56,4 +50,12 @@ body {
     border: 2px solid #2980b9; /* Agrega un borde cuando el input está enfocado */
 }
 
+.right-section {
+    flex: 3;
+    overflow: hidden; /* Evita que la imagen sobresalga del contenedor */
+}
 
+.right-section img {
+    max-width: 200%; /* Establece el ancho máximo de la imagen al 100% del contenedor */
+ 
+}
