@@ -107,13 +107,14 @@ function showMap(){
     const destino = localStorage.getItem('destino'); 
     const kilometros = localStorage.getItem("kilometros");
     const precio = localStorage.getItem("precio");
+    console.log(kilometros + " "+ precio)
     buscarRuta(salida,destino);
     const divEsperandoPasajero = document.querySelector("#esperandoPasajero");
 
     // Crea el título y los botones
     const titulo = document.createElement("h1");
     titulo.textContent = "¿Deseas aceptar el viaje?";
-    console.log(kilometros + " "+ precio)
+    
 
     const infoDiv = document.createElement("div");
     infoDiv.textContent = "Distancia: " + kilometros + " | Precio: " + precio;
