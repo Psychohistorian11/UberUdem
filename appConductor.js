@@ -111,16 +111,34 @@ function showMap(){
     buscarRuta(salida,destino);
     const divEsperandoPasajero = document.querySelector("#esperandoPasajero");
 
-    // Crea el título y los botones
-    const titulo = document.createElement("h1");
-    titulo.textContent = "¿Deseas aceptar el viaje?";
-    
+    const tituloDistancia = document.createElement("div");
+        tituloDistancia.textContent = "Distancia (km)";
+        tituloDistancia.style.fontSize = "27px";
+        tituloDistancia.style.marginTop = "20px";
+        tituloDistancia.style.marginBottom = "10px";
 
-    const infoDiv = document.createElement("div");
-    infoDiv.textContent = "Distancia: " + kilometros + " | Precio: " + precio;
-    infoDiv.style.fontWeight = "bold";
-    infoDiv.style.marginBottom = "10px";
-    infoDiv.style.fontSize = "20px"
+        const textoDistancia = document.createElement("div");
+        textoDistancia.textContent = kilometros;
+        textoDistancia.style.fontSize = "30px";
+        textoDistancia.style.padding = "10px 180px"; 
+        textoDistancia.style.borderRadius = "10px";
+        textoDistancia.style.backgroundColor = "#84d2f6";
+
+
+        const tituloPrecio = document.createElement("div");
+        tituloPrecio.textContent = "Valor del viaje (COP)";
+        tituloPrecio.style.fontSize = "27px";
+        tituloPrecio.style.marginBottom = "10px";
+        tituloPrecio.style.marginTop = "20px";
+
+        const textoPrecio = document.createElement("div");
+        textoPrecio.textContent = "$" + precio ;
+        textoPrecio.style.fontSize = "30px";
+        textoPrecio.style.padding = "10px 180px"; 
+        textoPrecio.style.borderRadius = "10px"; 
+        textoPrecio.style.backgroundColor = "#84d2f6"; 
+        textoPrecio.style.marginBottom = "40px";
+
 
     const botonAccept = document.createElement("button");
     botonAccept.textContent = "Aceptar viaje";
@@ -136,8 +154,11 @@ function showMap(){
   
     // Reemplaza el contenido del div
     divEsperandoPasajero.innerHTML = "";
-    divEsperandoPasajero.appendChild(titulo);
-    divEsperandoPasajero.appendChild(infoDiv);
+    divEsperandoPasajero.appendChild(tituloDistancia);
+    divEsperandoPasajero.appendChild(textoDistancia);
+    divEsperandoPasajero.appendChild(tituloPrecio);
+    divEsperandoPasajero.appendChild(textoPrecio);
+
     divEsperandoPasajero.appendChild(botonAccept);
     divEsperandoPasajero.appendChild(botonCancel);
   
@@ -265,7 +286,8 @@ function buscarRuta(salidaNew="",destinoNew="") {
                     const lngDestiny = results[0].geometry.location.lng();
                     
                     markerDestiny.setPosition({ lat: latDestiny, lng: lngDestiny });
-
+                    marker.setMap(null);
+                    markerDestiny.setMap(null);
 
                     calculateRoute();
              

@@ -1,7 +1,8 @@
 body {
     margin: 0;
     font-family: Arial, sans-serif;
-    background-color: #f0f0f0;
+    background-color: #000; /* Cambiado a negro */
+    color: #fff; /* Cambiado a blanco para mejorar la legibilidad del texto */
 }
 
 .container {
@@ -9,54 +10,61 @@ body {
     height: 100vh;
 }
 
-.left-section {
+.left-sectionUsuario {
+    font-size: 25px;
     flex: 1;
-    background-color: #3498db;
+    background-color: #59A5D8; 
     color: #fff;
-    padding: 20px;
+    padding: 40px;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
+  
 }
-/* Aumenta el tamaño y el espacio entre los labels y los inputs */
-.left-section label {
-    font-size: 20px;
+
+.left-sectionUsuario label {
+    font-size: 27px;
     margin-bottom: 10px;
+    color: #fff; 
+    align-items: flex-start;
 }
 
-.left-section input {
-    padding: 10px;
-    font-size: 16px;
+.left-sectionUsuario input {
+    padding: 10px 70px;
+    font-size: 25px;
     margin-bottom: 15px;
+    background-color: #84d2f6; /* Cambiado a negro */
+    color: #000;
+    border: 2px solid #59A5D8;
+    border-radius: 10px;
 }
 
-/* Estilo para el botón Buscar Ruta */
-.left-section button {
+.left-sectionUsuario button {
+    width: 450px;
     padding: 15px 30px;
     margin-top: 10px;
-    font-size: 18px;
+    font-size: 25px;
     cursor: pointer;
-    background-color: #2ecc71; /* Cambiado el color del botón */
+    background-color: #133C55; 
     border: none;
     color: #fff;
     border-radius: 5px;
-    transition: background-color 0.3s; /* Agregada una transición de color al botón */
-
+    transition: background-color 0.3s;
 }
 
-.left-section button:hover {
-    background-color: #27ae60; /* Cambia el color al pasar el cursor sobre el botón */
+.left-sectionUsuario button:hover {
+    background-color: #84d2f6;
 }
 
-/* Elimina el contorno predeterminado del input al hacer clic */
-.left-section input:focus {
+.left-sectionUsuario input:focus {
     outline: none;
-    border: 2px solid #2980b9; /* Agrega un borde cuando el input está enfocado */
+    border: 2px solid #386fa4;
 }
-.right-section {
-    flex: 1;
-    background-color: #fff;
+
+.right-sectionUsuario {
+    flex: 3;
+    background-color: #84d2f6; 
     overflow: hidden;
     display: flex;
     align-items: center;
@@ -64,13 +72,8 @@ body {
 }
 
 #map {
-    height: 100vh; /* Ajusta la altura del mapa según tus necesidades */
-    width: 80%; /* Ajusta el ancho del mapa según tus necesidades */
-    border: 2px solid #ddd; /* Añade un borde al mapa */
-    border-radius: 10px; /* Agrega esquinas redondeadas al mapa */
+    height: 90vh;
+    width: 80%;
+    border: 5px solid #133C55; 
+    border-radius: 10px;
 }
-
-.custom-content-class {
-    height: 150px; /* Ajusta la altura según tus necesidades */
-}
-

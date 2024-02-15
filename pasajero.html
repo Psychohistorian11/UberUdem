@@ -7,12 +7,12 @@
 <body>
     <div class="container">
 
-        <div class="left-section" id="registro">
-            <label for="salida">Salida:</label>
-            <input type="text" id="salida" placeholder="Ingrese la dirección de salida">
+        <div class="left-sectionUsuario" id="registro">
+            <label for="salida">Salida</label>
+            <input type="text" id="salida" >
 
-            <label for="destino">Destino:</label>
-            <input type="text" id="destino" placeholder="Ingrese la dirección de destino">
+            <label for="destino">Destino</label>
+            <input type="text" id="destino" >
 
             <button onclick="buscarRuta()">Buscar Ruta</button>
 
@@ -22,7 +22,7 @@
             </div>
         </div>
 
-        <div class="right-section">
+        <div class="right-sectionUsuario">
             <div id="map"></div>
             <script src="app.js"></script>
             <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA-dg5_nxz03QMOcCgRuXuQdCd3iAkNmDU&callback=initMap"></script>

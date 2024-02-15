@@ -7,6 +7,7 @@ let directionDisplayDriver;
 let routeGenerated = false;
 
 
+
 function initMap() {
 
 
@@ -87,12 +88,14 @@ function buscarRuta(salidaNew="",destinoNew="") {
                     const lngDestiny = results[0].geometry.location.lng();
                     
                     markerDestiny.setPosition({ lat: latDestiny, lng: lngDestiny });
+                    marker.setMap(null);
+                    markerDestiny.setMap(null);
 
 
                     calculateRoute(); // Llamada a calculateRoute después de obtener las coordenadas de destino
                     distanceText = localStorage.getItem("kilometros");
                     precio = localStorage.getItem("precio");
-                    enviarInformacion(salida, destino, distanceText, precio);
+                    enviarInformacion(salida, destino,distanceText,precio);
                 } else {
                     console.error("Error al obtener las coordenadas:", status);
                     Swal.fire({
@@ -135,41 +138,55 @@ function calculateRoute() {
             localStorage.setItem("kilometros", distanceText);
             precio = Math.round(calcularPrecio(distanceValue));
             localStorage.setItem("precio", precio);
-            mostrarBoton(distanceText, precio);
+            mostrarBoton(distanceText,precio);
         } else {
             alert('No se pudieron mostrar las direcciones debido a: ' + status);
         }
     });
 }
 
-function mostrarBoton(distanceText, precio) {
+function mostrarBoton(distanceText,precio) {
     if (routeGenerated) {
         const contenedorBoton = document.getElementById("botonContainer");
 
-        // Eliminar cualquier botón existente dentro del contenedor
-        contenedorBoton.innerHTML = '';
+        contenedorBoton.innerHTML="";
+
+        const tituloDistancia = document.createElement("div");
+        tituloDistancia.textContent = "Distancia (km)";
+        tituloDistancia.style.fontSize = "27px";
+        tituloDistancia.style.marginTop = "20px";
+        tituloDistancia.style.marginBottom = "10px";
+
+        const textoDistancia = document.createElement("div");
+        textoDistancia.textContent = distanceText;
+        textoDistancia.style.fontSize = "30px";
+        textoDistancia.style.padding = "10px"; 
+        textoDistancia.style.borderRadius = "10px";
+        textoDistancia.style.backgroundColor = "#84d2f6";
 
 
-        // Crear un div para el título "precio"
         const tituloPrecio = document.createElement("div");
-        tituloPrecio.textContent = "Precio";
-        tituloPrecio.style.fontWeight = "bold";
-        tituloPrecio.style.marginBottom = "5px";
-        tituloPrecio.style.fontSize = "20px"
+        tituloPrecio.textContent = "Valor del viaje (COP)";
+        tituloPrecio.style.fontSize = "27px";
+        tituloPrecio.style.marginBottom = "10px";
+        tituloPrecio.style.marginTop = "20px";
 
-        // Crear un div para mostrar el texto encima del botón
-        const textoDiv = document.createElement("div");
-        textoDiv.textContent = distanceText + ': $  ' + precio;
-        textoDiv.style.fontWeight = "bold";
-        textoDiv.style.fontSize = "20px";
+        const textoPrecio = document.createElement("div");
+        textoPrecio.textContent = "$" + precio ;
+        textoPrecio.style.fontSize = "30px";
+        textoPrecio.style.padding = "10px"; 
+        textoPrecio.style.borderRadius = "10px"; 
+        textoPrecio.style.backgroundColor = "#84d2f6"; 
 
-        // Crear el botón y añadirlo al contenedor
         const botonBuscarConductor = document.createElement("button");
+        botonBuscarConductor.style.marginTop = "20px";
         botonBuscarConductor.textContent = "Buscar Conductor";
         botonBuscarConductor.onclick = buscarConductor;
         
+        contenedorBoton.appendChild(tituloDistancia);
+        contenedorBoton.appendChild(textoDistancia);
         contenedorBoton.appendChild(tituloPrecio);
-        contenedorBoton.appendChild(textoDiv);
+        contenedorBoton.appendChild(textoPrecio);
         contenedorBoton.appendChild(botonBuscarConductor);
 
         contenedorBoton.style.textAlign = "center";
@@ -203,7 +220,8 @@ function cancelarPedido() {
 
     // Ocultar el contenedor del botón
     const contenedorBoton = document.getElementById("botonContainer");
-    contenedorBoton.innerHTML = '';
+   
+    
 
     // Limpiar el localStorage
     localStorage.removeItem('salida');
@@ -214,15 +232,15 @@ function cancelarPedido() {
     localStorage.setItem("driverOnTheWay", driverOnTheWay)
     Swal.close();
 
+    window.location.href = "pasajero.html";
+
 }
 
 function menuClicked() {
-    // Puedes agregar aquí el código que se ejecutará cuando se haga clic en el botón "Menu"
-    // Por ejemplo, puedes abrir un menú o realizar otra acción relacionada con el menú.
     window.location.href = "index.html";
 }
 
-function enviarInformacion(salida, destino, distanceText, precio){
+function enviarInformacion(salida, destino,distanceText,precio){
 
     localStorage.setItem("kilometros", distanceText);
     localStorage.setItem("precio", precio);
@@ -264,6 +282,8 @@ function driverOnTheWay(){
 
     driverInWay = "0";
     localStorage.setItem("driverInWay", driverInWay)
+
+
 }
     
 
