@@ -212,7 +212,7 @@ function enCamino(){
     const divEsperandoPasajero = document.querySelector("#esperandoPasajero");
 
     const infoDiv = document.createElement("div");
-    infoDiv.textContent = "De camino a recoger al pasajero";
+    infoDiv.textContent = "De camino a recoger al pasajero, factura enviada";
     infoDiv.style.fontWeight = "bold";
     infoDiv.style.marginBottom = "10px";
     infoDiv.style.fontSize = "40px"
@@ -222,7 +222,34 @@ function enCamino(){
 
     driverInWay = "1";
     localStorage.setItem("driverInWay", driverInWay);
+    const email = localStorage.getItem("correoElectronico")
+    enviarFactura(email)
 
+}
+
+function enviarFactura(email){
+    const salida = localStorage.getItem("salida")
+    const destino = localStorage.getItem("destino")
+    const kilometros = localStorage.getItem("kilometros")
+    const precio = localStorage.getItem("precio")
+    console.log(email)
+    console.log(salida)
+    console.log(destino)
+    console.log(kilometros)
+    console.log(precio)
+
+    var params = {
+        from_name : 'Cristian' ,
+        email: email,
+        origen : salida ,
+        destino: destino,
+        kilometros: kilometros,
+        precio: precio
+    }
+
+    emailjs.send("service_t3jqvpu", "template_nne188a", params).then(function(res){
+        alert("Succes" + res.status)
+    })
 }
 
 function cancelTravel() {

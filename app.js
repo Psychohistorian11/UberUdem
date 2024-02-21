@@ -195,16 +195,46 @@ function mostrarBoton(distanceText,precio) {
 }
 
 function buscarConductor() {
-
     Swal.fire({
         title: "Buscando conductor",
         icon: "info",
         showCloseButton: true,
         showConfirmButton: false,
-        html: "<button class='swal2-cancel swal2-styled' onclick='cancelarPedido()'>Cancelar Pedido</button>" +
-              "<button class='swal2-cancel swal2-styled' onclick='menuClicked()'>Ir al Menú</button>",    
+        html: "<input type='email' id='emailInput' placeholder='Ingrese su correo electrónico'>" +
+              "<button class='swal2-cancel swal2-styled' onclick='cancelarPedido()'>Cancelar Pedido</button>" +
+              "<button id='menuButton' class='swal2-cancel swal2-styled' onclick='menuClicked()' disabled>Ir al Menú</button>",
+        preConfirm: () => {
+            const email = document.getElementById('emailInput').value;
+            // Verificar si se ha ingresado un correo electrónico válido
+            if (!validateEmail(email)) {
+                Swal.showValidationMessage("Por favor ingrese un correo electrónico válido.");
+                return false; // Evita que la alerta se cierre si no se ha ingresado un correo válido
+            }
+            console.log('Correo electrónico ingresado:', email);
+            // Habilitar el botón "Ir al Menú" después de que se ha ingresado un correo válido
+            document.getElementById('menuButton').disabled = false;
+        }    
+    });
+
+    // Agregar un evento de escucha al campo de entrada de correo electrónico
+    const emailInput = document.getElementById('emailInput');
+    emailInput.addEventListener('input', function() {
+        const email = emailInput.value;
+        const menuButton = document.getElementById('menuButton');
+        if (email.trim() !== "" && validateEmail(email)) {
+            menuButton.disabled = false;
+        } else {
+            menuButton.disabled = true;
+        }
     });
 }
+
+// Función para validar un correo electrónico
+function validateEmail(email) {
+    const re = /\S+@\S+\.\S+/;
+    return re.test(email);
+}
+
 
 
 function cancelarPedido() {
@@ -237,8 +267,25 @@ function cancelarPedido() {
 }
 
 function menuClicked() {
-    window.location.href = "index.html";
+    const email = document.getElementById('emailInput').value;
+    // Verificar si se ha ingresado un correo electrónico válido
+    if (validateEmail(email)) {
+        // Guardar el correo electrónico en el localStorage
+        localStorage.setItem('correoElectronico', email);
+        // Redirigir al usuario al menú
+        // Aquí debes especificar la URL a la que deseas redirigir al usuario
+        window.location.href = "index.html";
+    } else {
+        // Mostrar un mensaje de error si el correo electrónico no es válido
+        Swal.fire({
+            icon: 'error',
+            title: 'Error',
+            text: 'Por favor ingrese un correo electrónico válido.',
+        });
+    }
+    
 }
+
 
 function enviarInformacion(salida, destino,distanceText,precio){
 
